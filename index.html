@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>onlypants.store - Office-Ready. All-Day Comfortable.</title>
+    <meta name="description" content="Not Jeans. Not Formals. Better. The only pants you'll ever need for work and life.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #1a1a1a;
+            --secondary-color: #2d2d2d;
+            --accent-color: #4a90e2;
+            --text-light: #ffffff;
+            --text-gray: #a0a0a0;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: var(--primary-color);
+            color: var(--text-light);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* Custom Cursor */
+        .cursor {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: all 0.1s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: all 0.3s ease;
+            transform: translate(-50%, -50%);
+        }
+
+        @media (max-width: 768px) {
+            .cursor, .cursor-follower {
+                display: none;
+            }
+            body {
+                cursor: auto;
+            }
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+        }
+
+        .bg-shape {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--gradient-1);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--gradient-2);
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 5s;
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            top: 50%;
+            left: 50%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(50px, -50px) scale(1.1);
+            }
+            66% {
+                transform: translate(-50px, 50px) scale(0.9);
+            }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 30px 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 20px 0;
+            background: rgba(26, 26, 26, 0.95);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 100px 20px 50px;
+        }
+
+        .hero-content {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .tagline {
+            font-size: clamp(18px, 3vw, 28px);
+            color: var(--accent-color);
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(16px, 2vw, 20px);
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto 50px;
+            line-height: 1.6;
+        }
+
+        /* Vision Section */
+        .vision {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .vision-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .vision-card {
+            background: rgba(45, 45, 45, 0.5);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(74, 144, 226, 0.1);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .vision-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .vision-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(74, 144, 226, 0.3);
+            background: rgba(45, 45, 45, 0.8);
+        }
+
+        .vision-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .vision-card p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Product Positioning */
+        .positioning {
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .positioning-statement {
+            font-size: clamp(24px, 4vw, 42px);
+            font-weight: 700;
+            line-height: 1.4;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .positioning-statement.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.8s ease;
+        }
+
+        .positioning-statement .highlight {
+            color: var(--accent-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        .features-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 60px;
+        }
+
+        .feature-tag {
+            background: rgba(74, 144, 226, 0.1);
+            border: 1px solid rgba(74, 144, 226, 0.3);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 16px;
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        .feature-tag:hover {
+            background: rgba(74, 144, 226, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 18px;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-direction: column;
+        }
+
+        @media (min-width: 600px) {
+            .email-form {
+                flex-direction: row;
+            }
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 18px 24px;
+            border: 2px solid rgba(74, 144, 226, 0.3);
+            border-radius: 50px;
+            background: rgba(45, 45, 45, 0.5);
+            color: var(--text-light);
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .email-input:focus {
+            border-color: var(--accent-color);
+            background: rgba(45, 45, 45, 0.8);
+        }
+
+        .email-input::placeholder {
+            color: var(--text-gray);
+        }
+
+        .submit-btn {
+            padding: 18px 40px;
+            background: var(--accent-color);
+            color: var(--text-light);
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .submit-btn:hover {
+            background: #3a7bc8;
+            transform: scale(1.05);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(74, 144, 226, 0.1);
+        }
+
+        footer p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            background: rgba(74, 144, 226, 0.2);
+            border: 1px solid var(--accent-color);
+            padding: 15px 30px;
+            border-radius: 50px;
+            margin-top: 20px;
+            color: var(--text-light);
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .scroll-indicator svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--accent-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+        <div class="bg-shape shape-3"></div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="logo">only<span>pants</span>.store</div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>The Only Pants<br>You'll Ever Need</h1>
+            <p class="tagline">Office-Ready. All-Day Comfortable.</p>
+            <p class="subtitle">Not jeans. Not formals. Better. Built for work. Designed for life.</p>
+            <div class="scroll-indicator">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M19 12l-7 7-7-7"/>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section class="vision">
+        <div class="container">
+            <h2 class="section-title">Our Vision</h2>
+            <div class="vision-grid">
+                <div class="vision-card">
+                    <h3>Fashionable</h3>
+                    <p>Clean, modern silhouettes that look professional in any setting. Minimal branding, maximum style.</p>
+                </div>
+                <div class="vision-card">
+                    <h3>Comfortable</h3>
+                    <p>4-way stretch fabric that moves with you. Feels like joggers, looks like office wear.</p>
+                </div>
+                <div class="vision-card">
+                    <h3>Versatile</h3>
+                    <p>Seamlessly transition from office meetings to casual outings. One pant for every occasion.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Positioning Section -->
+    <section class="positioning">
+        <div class="container">
+            <div class="positioning-statement">
+                We're creating <span class="highlight">Tech Pants for Indian Offices</span> — the perfect blend of performance fabric and professional style.
+            </div>
+            <div class="features-list">
+                <span class="feature-tag">4-Way Stretch</span>
+                <span class="feature-tag">Wrinkle Resistant</span>
+                <span class="feature-tag">Breathable</span>
+                <span class="feature-tag">Machine Washable</span>
+                <span class="feature-tag">All-Day Comfort</span>
+                <span class="feature-tag">Office Ready</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2 class="cta-title">Coming Soon</h2>
+                <p class="cta-subtitle">Be the first to know when we launch. Join our exclusive waitlist.</p>
+                <form class="email-form" id="emailForm">
+                    <input 
+                        type="email" 
+                        class="email-input" 
+                        placeholder="Enter your email" 
+                        required
+                        id="emailInput"
+                    >
+                    <button type="submit" class="submit-btn">Stay Tuned</button>
+                </form>
+                <div class="success-message" id="successMessage">
+                    ✓ Thanks! We'll keep you updated.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 onlypants.store. The only pants you'll ever need.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+
+        // Cursor hover effects
+        const interactiveElements = document.querySelectorAll('a, button, input, .vision-card, .feature-tag');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+            });
+        });
+
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.2,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe vision cards
+        document.querySelectorAll('.vision-card').forEach((card, index) => {
+            card.style.transitionDelay = `${index * 0.2}s`;
+            observer.observe(card);
+        });
+
+        // Observe positioning statement
+        const positioningStatement = document.querySelector('.positioning-statement');
+        if (positioningStatement) {
+            observer.observe(positioningStatement);
+        }
+
+        // Email form submission
+        const emailForm = document.getElementById('emailForm');
+        const emailInput = document.getElementById('emailInput');
+        const successMessage = document.getElementById('successMessage');
+
+        emailForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = emailInput.value;
+            
+            // Here you would typically send the email to your backend
+            console.log('Email submitted:', email);
+            
+            // Show success message
+            successMessage.classList.add('show');
+            emailInput.value = '';
+            
+            // Hide success message after 5 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 5000);
+        });
+
+        // Smooth scroll for scroll indicator
+        document.querySelector('.scroll-indicator')?.addEventListener('click', () => {
+            document.querySelector('.vision').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const shapes = document.querySelectorAll('.bg-shape');
+            shapes.forEach((shape, index) => {
+                const speed = (index + 1) * 0.05;
+                shape.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+    </script>
+</body>
+</html>
