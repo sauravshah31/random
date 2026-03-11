@@ -626,8 +626,11 @@
             submitBtn.textContent = 'Sending...';
 
             try {
+                // Use redirect: 'manual' so fetch doesn't follow the 302 redirect
+                // formly.email responds with 302 → /thank-you on success
                 const response = await fetch('https://formly.email/submit', {
                     method: 'POST',
+                    redirect: 'manual',
                     headers: {
                         'Content-Type': 'application/json',
                         'Accept': 'application/json'
@@ -639,16 +642,18 @@
                     })
                 });
 
-                const data = await response.json();
+                // response.type === 'opaqueredirect' and status === 0 means the server
+                // issued a redirect (302), which is formly.email's success response
+                const isSuccess = response.ok || response.type === 'opaqueredirect' || response.status === 0;
 
-                if (response.ok) {
+                if (isSuccess) {
                     successMessage.textContent = '✓ Thanks! We\'ll keep you updated.';
                     successMessage.style.borderColor = 'var(--accent-color)';
                     successMessage.style.background = 'rgba(74, 144, 226, 0.2)';
                     successMessage.classList.add('show');
                     emailInput.value = '';
                 } else {
-                    throw new Error(data.message || 'Submission failed');
+                    throw new Error('Submission failed with status ' + response.status);
                 }
             } catch (err) {
                 successMessage.textContent = '✗ Something went wrong. Please try again.';
